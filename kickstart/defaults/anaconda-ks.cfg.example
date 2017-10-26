@@ -1,0 +1,88 @@
+# ##############################################################################
+# Annotated copy of anaconda-ks.cfg ############################################
+#  generated during VirtualBox install from .ISO ###############################
+
+
+# REFS:
+#  https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Installation_Guide/chap-kickstart-installations.html
+#  https://github.com/rhinstaller/pykickstart/blob/master/docs/kickstart-docs.rst
+
+
+
+#version=DEVEL
+
+# System authorization information
+auth --enableshadow --passalgo=sha512
+
+# Use CDROM installation media
+cdrom
+
+# Use text mode install
+text
+
+# Run the Setup Agent on first boot
+firstboot --enable
+ignoredisk --only-use=vda
+
+# Keyboard layouts
+keyboard --vckeymap=us --xlayouts='us'
+
+# System language
+lang en_US.UTF-8
+
+# Network information
+network  --hostname=localhost.localdomain
+network  --bootproto=dhcp --device=eno1 --noipv6 --activate
+# new      network  --bootproto=dhcp --device=eno1   --noipv6 --activate
+# original network  --bootproto=dhcp --device=enp0s3 --noipv6 --activate
+# the device was NOT installed in the vm as eno1
+# it is named eth0
+
+# Root User's password
+rootpw --iscrypted $6$<PASSWORD>
+
+# New User
+user --name=<UNAME> --groups=<GNAME> --iscrypted --password=$6$<PASSWORD>
+
+# Do not configure the X Window System
+skipx
+
+# System services
+# DO THIS - disable it or remove it
+# since guests should use chronyd
+# services --disabled="ntp"
+
+# System timezone
+timezone America/Chicago
+#timezone America/Chicago --isUtc --nontp --ntpservers=0.centos.pool.ntp.org,1.centos.pool.ntp.org,2.centos.pool.ntp.org,3.centos.pool.ntp.org
+# the above produced a FATAL ERROR:
+#  Options --nontp and --ntpservers are mutually exclusive
+#  I was hoping to get chrony instead of ntp
+
+# System bootloader configuration
+bootloader --append=" crashkernel=auto" --location=mbr --boot-drive=vda
+autopart --type=lvm
+# change to a plain non-lvm
+
+# Partition clearing information
+clearpart --drives=vda --all --initlabel
+
+%packages
+  # what does the caret mean?
+  @^minimal
+  @core
+  kexec-tools
+  openscap
+  openscap-scanner
+  scap-security-guide
+%end
+
+# PHYSICAL MACHINE ONLY - %addon com_redhat_kdump --enable --reserve-mb='auto' %end
+
+%addon org_fedora_oscap
+  content-type = scap-security-guide
+  profile = standard
+%end
+
+# Reboot after installation - don't ask for "press return"
+reboot

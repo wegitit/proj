@@ -7,6 +7,9 @@ host_setup/
 
 kickstart/*
 !kickstart/defaults/
+kickstart/defaults/*
+!kickstart/defaults/*.example
+!kickstart/defaults/default-dhcp.ks
 
 locale/
 mkpasswd/

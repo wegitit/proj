@@ -1,0 +1,17 @@
+
+### USERS(
+# base file: default-users.ks
+
+#  The line below is a GREP TARGET
+#### ROOT USER
+rootpw              --iscrypted $6$<PASSWORD>
+
+#### Fixer Group
+group --name=<GNAME>
+
+#### Other User(s)
+user --name=<UNAME1> --iscrypted --password=$6$<PASSWORD> --groups=<GNAME,GNAMEX> --gecos "<OPTIONAL>" 
+
+user --name=<UNAME2> --iscrypted --password=$6$<PASSWORD> --groups=<GNAME,GNAMEX> --gecos "<OPTIONAL>"
+### )
+
