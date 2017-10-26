@@ -10,7 +10,7 @@ mkpasswd/
 
 #  mkvm/
 mkvm/backups-to-add-to-gz/
-mkvm/utils/
+#  mkvm/utils/
 mkvm/betterHandlerFunctionEx1
 mkvm/betterHandlerFunctionEx2
 mkvm/mkvm-backups.tar.gz
