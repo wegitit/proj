@@ -25,7 +25,7 @@ mkvm/vm.notes
 
 mount-nas/
 set-env-var/
-ssh_fingerprint/
+#  ssh_fingerprint/
 configFirewall.sh
 #  gitignore_ls.sh
 is_a_reboot_needed.sh
