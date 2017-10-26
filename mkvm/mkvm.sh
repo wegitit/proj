@@ -282,50 +282,6 @@ function thereAreBadParms() {
 
 
 # |====================================|
-# File Feature Functions ===============
-
-
-########################################
-# Checks if a filename has an extension
-#
-# Returns
-#  (int) bool
-#
-# NOTE
-#  see getFilenameExtension() for examples
-#
-function filenameHasAnExtension() {
- [ "$(getFilenameExtension "$1")" == '' ] && echo $FALSE || echo $TRUE
-}
-
-
-########################################
-# Get the extension of a filename
-#
-# Returns
-#  string
-#
-# NOTE
-#  Examples:
-#   file='/etc/apache2/apache2.conf'
-#    ext='conf'
-#   file='.name.ext' || file='..name.ext'
-#    ext='ext'
-#   file='' || file='.name'
-#    ext=''
-#
-function getFilenameExtension() {
- local filespec="$1"
- # get the filename. using -r (extended regex), strip it of leading periods
- local filename=$(echo $(basename "$filespec") | sed -r 's/^\.+//')
-
- # REF: stackoverflow.com/questions/965053/extract-filename-and-extension-in-bash#comment16533739_965_965072
- echo $([[ "$filename" = *.* ]] && echo "${filename##*.}" || echo '')
-}
-
-
-
-# |====================================|
 # File Modifier Functions ==============
 
 
