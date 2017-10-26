@@ -4,7 +4,10 @@ disc2iso/
 expand_url/
 ffmpeg/
 host_setup/
-kickstart/
+
+kickstart/*
+!kickstart/defaults/
+
 locale/
 mkpasswd/
 
