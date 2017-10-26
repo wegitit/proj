@@ -70,18 +70,8 @@
 #
 # TODO
 #  Consider
-#   Sending non executable messages to stderr
+#   Sending non-executable messages to stderr
 #   Adding SELinux context check/warnings
-#
-#  Send to git,
-#   include helpers
-#   incl mkpass
-#   note locations
-#   gitignore the users files
-#   commit examples of them, name.ks.example instead
-#
-#  File name extension functions are orphaned unless media is implemented
-#   remove them after 1st commit
 
 
 
