@@ -12,7 +12,8 @@ kickstart/defaults/*
 !kickstart/defaults/default-dhcp.ks
 
 locale/
-mkpasswd/
+#  mkpasswd/
+mkpasswd/backups
 
 #  mkvm/
 mkvm/backups-to-add-to-gz/
