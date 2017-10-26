@@ -70,7 +70,7 @@
 #
 # TODO
 #  Consider
-#   Sending non executable messaages to stderr
+#   Sending non executable messages to stderr
 #   Adding SELinux context check/warnings
 #
 #  Send to git,
@@ -522,11 +522,6 @@ function insertFileContents() {
 ########################################
 # Get the config file name
 #
-# REMOVE THIS NOTE
-#  current name
-#   used as actual config
-#   generated if it does not exist
-#
 # Expects
 #  void
 #
@@ -541,11 +536,6 @@ function getConfigFilename() {
 ########################################
 # Get the default config file name
 #
-# REMOVE THIS NOTE
-#  default name, varies by ipAddressProvider
-#   used as source for generating unavailable new config
-#   not used as actual config
-#
 # Expects
 #  void
 #
@@ -559,11 +549,6 @@ function getConfigFilenameDEFAULT() {
 
 ########################################
 # Get the path spec of the config file
-#
-# REMOVE THIS NOTE
-#  current spec
-#   used as actual config
-#   generated if it does not exist
 #
 # Expects
 #  void
@@ -580,11 +565,6 @@ function getConfigFilespec() {
 ########################################
 # Get the default path spec of the config file
 #
-# REMOVE THIS NOTE
-#  default spec, varies by ipAddressProvider
-#   used as source for generating unavailable new config
-#   not used as actual config
-#
 # Expects
 #  void
 #
@@ -600,9 +580,6 @@ function getConfigFilespecDEFAULT() {
 ########################################
 # Get the path spec of the distro file
 #
-# REMOVE THIS NOTE
-#  varies by distroDIR
-#
 # Expects
 #  void
 #
@@ -616,9 +593,6 @@ function getDistroFilespec() {
 
 ########################################
 # Get the path spec of the image file
-#
-# REMOVE THIS NOTE
-#  varies by imageDIR
 #
 # Expects
 #  void
@@ -648,9 +622,6 @@ function getUsersFilename() {
 ########################################
 # Get the path spec of the users file
 #
-# REMOVE THIS NOTE
-#  varies by configDIR
-#
 # Expects
 #  void
 #
@@ -665,9 +636,6 @@ function getUsersFilespec() {
 
 ########################################
 # Get the default path spec of the users file
-#
-# REMOVE THIS NOTE
-#  varies by configDIR
 #
 # Expects
 #  void
