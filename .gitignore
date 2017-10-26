@@ -1,0 +1,35 @@
+c/
+cpp/
+disc2iso/
+expand_url/
+ffmpeg/
+host_setup/
+kickstart/
+locale/
+mkpasswd/
+
+#  mkvm/
+mkvm/backups-to-add-to-gz/
+mkvm/utils/
+mkvm/betterHandlerFunctionEx1
+mkvm/betterHandlerFunctionEx2
+mkvm/mkvm-backups.tar.gz
+mkvm/mkvm.elapsedTime
+mkvm/mkvm.elapsedTime2
+mkvm/mkvm.elapsedTime3
+mkvm/mkvm.notes
+#  mkvm/mkvm.sh
+mkvm/virsh-help
+mkvm/vminst.notes
+mkvm/vm.notes
+
+mount-nas/
+set-env-var/
+ssh_fingerprint/
+configFirewall.sh
+#  gitignore_ls.sh
+is_a_reboot_needed.sh
+most_recently_updated_javascript_libs_on_github.sh
+rm_dir_contents.sh
+ytdl-works-but-incomplete.sh
+
