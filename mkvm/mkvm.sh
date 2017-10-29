@@ -1396,8 +1396,6 @@ function yn() {
 # checker can handle ports+ or ports-
 #
 #  
-#  change name to reflect that it is callin
-#
 # Expects
 #  string of the form: '1.2.3.4'
 #
