@@ -14,7 +14,6 @@
 
 
 
-
 # constants
 E_NO_ERROR=0
 E_MISSING_ARGS=1
@@ -42,7 +41,7 @@ function getFingerprint() {
  local tmp=''
 
  if [[ "$cliCmd_ipKey" -eq $TRUE && "$cliCmd_userKey" -eq "$TRUE" ]]; then
-  showHelpForBadParm "choose host or user check, not both"
+  showHelp $E_BAD_ARGS "choose host or user check, not both"
  fi
 
  if [ "$cliCmd_ipKey" -eq "$TRUE" ]; then
@@ -50,7 +49,7 @@ function getFingerprint() {
  elif [ "$cliCmd_userKey" -eq "$TRUE" ]; then
   tmp=$(getFingerprintForUser "$parm")
  else
-  showHelpForMissingParm
+  showHelp "$E_MISSING_ARGS"
  fi
 
  local rc="$?"
@@ -150,23 +149,23 @@ function getHomeDirForUser() {
 #
 function handleCommandLine() {
  if [ "$#" -lt 1 ]; then
-  showHelpForMissingParm
+  showHelp "$E_MISSING_ARGS"
  elif [ "$#" -gt 2 ]; then
-  showHelpForBadParm "too many parms"
+  showHelp "$E_BAD_ARGS" "too many parms"
  fi
 
  for parm in "$@"; do
   case "$parm" in
    -i)
-   cliCmd_ipKey=$TRUE
+   cliCmd_ipKey="$TRUE"
    shift
    ;;
    -u)
-   cliCmd_userKey=$TRUE
+   cliCmd_userKey="$TRUE"
    shift
    ;;
    -h)
-   showHelpForCliRequest
+   showHelp "$E_NO_ERROR"
    ;;
    *)
    subject="$parm"
@@ -177,21 +176,35 @@ function handleCommandLine() {
 
 
 ########################################
+# Checks if a value is an integer
+#
+# Returns
+#  (int) bool
+#
+# NOTE
+#  Usage:
+#   ans=$(isInteger $val)
+#
+function isInteger() {
+ local result=$FALSE
+
+ # if non-empty parm exists
+ if [[ "$#" -gt 0 && -n "$1" ]]; then
+  # do bash compare, hide std err
+  # REF: grzechu.blogspot.com/2006/06/bash-scripting-checking-if-variable-is.html
+  #      stackoverflow.com/questions/3623662/bash-testing-if-a-variable-is-an-integer
+  if [ "$1" -eq "$1" 2>/dev/null ]; then result=$TRUE; fi
+ fi
+
+ echo $result
+}
+
+
+########################################
 # Checks if a value is formatted as an IPv4 address
 #
-# TODO
-# VERY IMPORTANT
-#  This is a complicated question that, for IPv6 addresses, will require a lot of testing
-#  one starting point:
-#   https://stackoverflow.com/questions/53497/regular-expression-that-matches-valid-ipv6-addresses
-#
-# given whether IPv6 is nailed down, modify the caller call to each IPvX checker and reply yes if one or the other matches
-# as for ports, a bad port returns no
-# checker can handle ports+ or ports-
-#
-#  
 # Expects
-#  string of the form: '1.2.3.4'
+#  dot-decimal ip address eg '1.2.3.4'
 #
 # Returns
 #  (int) bool
@@ -228,7 +241,19 @@ function isIpAddress() {
 
 ########################################
 #
+# Display help, exit with assigned return code
+#
+# Expects:
+#  exit code: parm#1
+#  message: parm#2 [optional]
+#
+# Returns:
+#  void
+#
 function showHelp() {
+ local code="$1"
+ local parm="$2"
+
  echo
  echo "get SSH public key fingerprint"
  echo
@@ -245,39 +270,19 @@ function showHelp() {
  echo "  "$E_UNKNOWN_USER": User Not Recognized"
  echo "  "$E_UNKNOWN_ERROR": Unknown Error"
  echo
-}
 
-
-########################################
-#
-function showHelpForBadParm() {
- local badParm="$1"
-
- showHelp
-
- if [ "$badParm" ]; then
+ # TODO
+ # maybe: if p1 && p1 <> int, print it
+ #        if p1 == int && p2, print p2, exit p1
+ if [ $(isInteger "$code") -eq "$FALSE" ]; then
+  code=$E_UNKNOWN_ERROR
+ elif [[ "$code" -eq "$E_BAD_ARGS" && "$parm" ]]; then
   echo
   echo 'Unrecognized argument: '$badParm
   echo
  fi
 
- exit $E_BAD_ARGS
-}
-
-
-########################################
-#
-function showHelpForCliRequest() {
- showHelp
- exit $E_NO_ERROR
-}
-
-
-########################################
-#
-function showHelpForMissingParm() {
- showHelp
- exit $E_MISSING_ARGS
+ exit $code
 }
 
 
