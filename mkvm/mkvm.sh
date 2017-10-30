@@ -1457,32 +1457,6 @@ function isInteger() {
 }
 
 
-########################################
-# Checks if a value is numeric
-#
-# Returns
-#  (int) bool
-#
-# NOTE
-#  Usage:
-#   ans=$(isNumeric $val)
-#  Numeric values can flexibly formatted:
-#   quoted/unquoted, negative/positive, decimal/float
-#
-function isNumeric() {
- local result=$FALSE
-
- if [ -n "$1" ]; then
-  # 0..1 dashes ((0+ digits 0..1 dots) 0..1 times), 1+ digits
-  local match=$(echo "$1" | egrep '^[-]?([0-9]*[\.]?)?[0-9]+$')
-
-  if [ -n "$match" ]; then result=$TRUE; fi
- fi
-
- echo $result
-}
-
-
 
 # |============================================================================|
 # Main =========================================================================
