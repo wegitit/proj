@@ -26,8 +26,8 @@ TRUE=1
 FALSE=0
 
 #variables
-cliCmd_ipKey=$FALSE
-cliCmd_userKey=$FALSE
+cliCmd_getHostPrint=$FALSE
+cliCmd_getUserPrint=$FALSE
 subject=''
 
 
@@ -40,13 +40,13 @@ function getFingerprint() {
  local result=''
  local tmp=''
 
- if [[ "$cliCmd_ipKey" -eq $TRUE && "$cliCmd_userKey" -eq "$TRUE" ]]; then
+ if [[ "$cliCmd_getHostPrint" -eq $TRUE && "$cliCmd_getUserPrint" -eq "$TRUE" ]]; then
   showHelp $E_BAD_ARGS "choose host or user check, not both"
  fi
 
- if [ "$cliCmd_ipKey" -eq "$TRUE" ]; then
+ if [ "$cliCmd_getHostPrint" -eq "$TRUE" ]; then
   tmp=$(getFingerprintForHost "$parm")
- elif [ "$cliCmd_userKey" -eq "$TRUE" ]; then
+ elif [ "$cliCmd_getUserPrint" -eq "$TRUE" ]; then
   tmp=$(getFingerprintForUser "$parm")
  else
   showHelp "$E_MISSING_ARGS"
@@ -157,11 +157,11 @@ function handleCommandLine() {
  for parm in "$@"; do
   case "$parm" in
    -i)
-   cliCmd_ipKey="$TRUE"
+   cliCmd_getHostPrint="$TRUE"
    shift
    ;;
    -u)
-   cliCmd_userKey="$TRUE"
+   cliCmd_getUserPrint="$TRUE"
    shift
    ;;
    -h)
