@@ -69,6 +69,9 @@
 #    linux.dell.com/files/whitepapers/KVM_Virtualization_in_RHEL_7_Made_Easy.pdf
 #
 # TODO
+#  Do Not call with $() Note:
+#    The Do Not Call with $() functions should all 'return' a code to check
+#    so the caller can logBadParm for them
 #  Consider
 #   Sending non-executable messages to stderr
 #   Adding SELinux context check/warnings
@@ -1171,7 +1174,6 @@ fi
 #
 # Handles:
 #  parm value not provided
-#  parm value contains whitespace
 #
 # Expects
 #  parmStr: parm1
@@ -1184,6 +1186,35 @@ fi
 #  Do Not call with $()
 #
 function parmCheck_String() {
+ local parmStr="$1"
+ local parmVal="$2"
+
+ if [ -z "$parmVal" ]; then
+  logBadParm 'Argument value missing or empty' "$parmStr"
+ fi
+}
+
+
+########################################
+# Trap bad parm: invalid string identifier
+#
+# Handles:
+#  parm value not provided
+#  parm value contains whitespace
+#
+# Expects
+#  parmStr: parm1
+#  parmVal: parm2
+#
+# Returns
+#  void
+#
+# NOTE
+#  Do Not call with $()
+#  See the top level TODO re Do Not call with $() Note
+#   This should be able to call parmCheck_String, not repeat its code
+#
+function parmCheck_StringIdentifier() {
  local parmStr="$1"
  local parmVal="$2"
 
@@ -1217,7 +1248,7 @@ function handleCommandLine() {
   case "$parm" in
    -n=*|--name=*)
    name_cli="${parm#*=}"
-   parmCheck_String "$parm" "$name_cli"
+   parmCheck_StringIdentifier "$parm" "$name_cli"
    shift
    ;;
    -d=*|--description=*)
@@ -1396,6 +1427,8 @@ function yn() {
 # checker can handle ports+ or ports-
 #
 #  
+#  change name to reflect that it is callin
+#
 # Expects
 #  string of the form: '1.2.3.4'
 #
@@ -1451,6 +1484,32 @@ function isInteger() {
   # REF: grzechu.blogspot.com/2006/06/bash-scripting-checking-if-variable-is.html
   #      stackoverflow.com/questions/3623662/bash-testing-if-a-variable-is-an-integer
   if [ "$1" -eq "$1" 2>/dev/null ]; then result=$TRUE; fi
+ fi
+
+ echo $result
+}
+
+
+########################################
+# Checks if a value is numeric
+#
+# Returns
+#  (int) bool
+#
+# NOTE
+#  Usage:
+#   ans=$(isNumeric $val)
+#  Numeric values can flexibly formatted:
+#   quoted/unquoted, negative/positive, decimal/float
+#
+function isNumeric() {
+ local result=$FALSE
+
+ if [ -n "$1" ]; then
+  # 0..1 dashes ((0+ digits 0..1 dots) 0..1 times), 1+ digits
+  local match=$(echo "$1" | egrep '^[-]?([0-9]*[\.]?)?[0-9]+$')
+
+  if [ -n "$match" ]; then result=$TRUE; fi
  fi
 
  echo $result
