@@ -1,3 +1,6 @@
+#!/bin/python
+
+
 # Return a password hash for use in the shadow file
 #
 #
@@ -267,3 +270,4 @@ def main():
 
 if __name__ == "__main__":
    main()
+
