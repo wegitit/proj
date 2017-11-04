@@ -246,10 +246,11 @@ networkAttachmentType='bridge'
 function logBadParm() {
  local msg="$1"
  local parm="$2"
+ local final="$msg"
 
  if [ -n "$msg" ]; then
-  if [ -n "$parm" ]; then parm="[$parm] << "; fi
-  badParmsList+=("$parm$msg") # remove quotes to ruin element count
+  if [ -n "$parm" ]; then final=\'["$parm"]' << '"$msg"\'; fi
+  badParmsList+=("$final") # remove quotes to ruin element count
  fi
 }
 
@@ -847,6 +848,10 @@ function showHelp() {
  echo '          ram allocated (MB)'
  echo '          default: '$RAM_SIZE_DEFAULT
  echo '          >current: '$ramSize
+ echo '  -p, --placement'
+ echo '          file placement (see below)'
+ echo '          default: '$STORAGE_PLACEMENT_DEFAULT
+ echo '          >current: '$storagePlacement
 # cli options not yet implemented moved to Internal Settings section below
  echo
 
@@ -863,6 +868,7 @@ function showHelp() {
  echo '          >current: '$yn
  echo '  -h --help'
  echo '          display this info'
+ echo
  echo
  echo 'Internal Settings'
  echo ' Network:'
@@ -893,7 +899,8 @@ function showHelp() {
 # echo
 
 
- echo 'Storage Placement'
+ echo 'Storage Settings'
+ echo ' Placement'
  if [ "$storagePlacement" == $STORAGE_PLACEMENT_BIG ]; then
   echo '  - All on Big drive'
  elif [ "$storagePlacement" == $STORAGE_PLACEMENT_FAST ]; then
@@ -941,7 +948,7 @@ function deliverResults() {
  cmd="virt-install
    --connect=qemu:///system
    --name $name
-   --description $description
+   --description '$description'
    --network bridge:br0,model=virtio
    --ram=$ramSize
    --vcpus=$cpuCount
