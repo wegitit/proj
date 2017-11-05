@@ -310,7 +310,7 @@ function doFinalFileChecksAndFallbacks() {
    # this may be a TODO, rather than an error
    exit
   elif [ "$tmp" -eq 1 ]; then
-   echo 'INFO: Generated config from default'
+   echo '# INFO: Generated config from default'
   fi
  fi
 
@@ -342,7 +342,7 @@ function doFinalFileChecksAndFallbacks() {
    echo
    exit
   elif [ "$tmp" -eq 1 ]; then
-   echo 'INFO: Generated users from default'
+   echo '# INFO: Generated users from default'
   fi
  fi
 
@@ -963,7 +963,7 @@ function deliverResults() {
  if [ "$cliCmd_execute" -eq $TRUE ]; then
   eval $cmd
  else
-  printf "\n#!/bin/bash\n$cmd\n\n"
+  printf "\n$cmd\n\n"
  fi
 }
 
