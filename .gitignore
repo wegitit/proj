@@ -35,6 +35,9 @@ mkvm/virsh-help
 mkvm/vminst.notes
 mkvm/vm.notes
 
+ytdl/*
+!ytdl/ytdl
+
 mount-nas/
 set-env-var/
 #  ssh_fingerprint/
