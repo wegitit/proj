@@ -43,7 +43,6 @@ set-env-var/
 #  ssh_fingerprint/
 configFirewall.sh
 #  gitignore_ls.sh
-groups_that_may_not_be_needed.sh
 is_a_reboot_needed.sh
 most_recently_updated_javascript_libs_on_github.sh
 rm_dir_contents.sh
