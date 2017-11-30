@@ -1,0 +1,44 @@
+# mpstat/top output comparison
+
+# Command:
+# echo --; mpstat -u | tail -n 2; echo --; top -b -n 1 | head -n 3 | tail -n 1; echo --; mpstat -u | tail -n 2; echo --
+
+# Output:
+# --
+# 09:16:10 PM  CPU    %usr   %nice    %sys %iowait    %irq   %soft  %steal  %guest  %gnice   %idle
+# 09:16:10 PM  all    0.02    0.01    0.18    0.17    0.00    0.00    0.00    0.00    0.00   99.62
+# --
+# %Cpu(s):  0.0 us,  0.8 sy,  0.0 ni, 99.2 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+# --
+# 09:16:10 PM  CPU    %usr   %nice    %sys %iowait    %irq   %soft  %steal  %guest  %gnice   %idle
+# 09:16:10 PM  all    0.02    0.01    0.18    0.17    0.00    0.00    0.00    0.00    0.00   99.62
+# --
+
+# top         : descriptions (paraphrased)
+# it, user    : running un-niced user processes
+# sy, system  : running kernel processes
+# ni, nice    : running niced user processes
+# id, idle    : in the kernel idle hand
+# wa, IO-wait : waiting for I/O completion
+# hi          : servicing hw interrupts
+# si          : servicing software interrupts
+# st          : stolen by the hypervisor
+
+# mpstat      : descriptions (paraphrased)
+# %usr        : running user level app(s)
+# %nice       : running niced user level app(s)
+# %sys        : running system (kernel) level ops
+#               Does not include time spent on hardware/software interrupts
+# %iowait     : idle while system had outstanding disk I/O request(s)
+# %irq        : servicing hw interrupts
+# %soft       : servicing software interrupts
+# %steal      : in involuntary wait while the hypervisor serviced a vCPU
+# %guest      : spent on a vCPU
+# %gnice      : spent on a niced guest
+# %idle       : idle while system had no outstanding disk I/O request
+
+# top -> mpstat map
+# top    :                      it              sy   wa         hi     si     st              ni       id
+# mpstat : 09:16:10 PM  CPU    %usr   %nice    %sys %iowait    %irq   %soft  %steal  %guest  %gnice   %idle
+# mpstat : 09:16:10 PM  all    0.02    0.01    0.18    0.17    0.00    0.00    0.00    0.00    0.00   99.62
+
