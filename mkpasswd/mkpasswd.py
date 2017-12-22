@@ -150,13 +150,13 @@ def getCommandLineValues():
 #
 # NOTE:
 #  raises:
-#   ValueError when salt does not match [./a-zA-Z0-9]
+#   ValueError when salt does not match ^[./a-zA-Z0-9]{2}$
 #  salt info: "Generate Random Password Strings" REF[5]
 #  alt approaches: "Password Generator Solutions" REF[6]
 #
 def getPrefix(salt):
     DOLLAR_SIGN = '$'
-    RE_PATTERN = '^[./a-z0-9]+$'
+    RE_PATTERN = '^[./a-z0-9]{2}$'
 
     MD5 = '1'
     SHA256 = '5'
