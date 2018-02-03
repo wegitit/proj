@@ -1,0 +1,5 @@
+---
+# Variables that are normally available under special conditions
+
+ansible_managed: This file is Ansible Managed - Beware that manual edits may be overwritten
+
