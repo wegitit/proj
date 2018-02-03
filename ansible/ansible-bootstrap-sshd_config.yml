@@ -1,0 +1,49 @@
+---
+
+# TODO
+#
+# When is it OK to restart the SSH service?
+
+
+# REFS
+#
+# Python regular expressions guide
+#  https://docs.python.org/2/library/re.html
+#
+# Regex sandbox
+#  https://regex101.com/r/Ss7JFZ/3
+#
+# Ignore comments with whitespace in regex
+#  https://stackoverflow.com/a/47928204/760202
+
+
+
+- name: Ready sshd_config for Ansible Management and access
+  hosts: localhost
+
+
+  vars:
+#   path_to_sshd_config: '/etc/ssh/sshd_config'
+    path_to_sshd_config: '/root/proj/ansible/sshd_config.test'
+
+
+    - name: Insert the Ansible Managed warning into the file
+      lineinfile:
+        path:     "{{ path_to_sshd_config }}"
+        line:     "# {{ ansible_managed }}"
+        state:    present
+        insertbefore: BOF
+        validate: '/usr/sbin/sshd -qtf %s'
+        backup:   yes
+
+
+    - name: Ensure the SSH Public Key Authentication method is enabled
+            # Weigh the option to enable it on a per-user basis
+      replace:
+        path:     "{{ path_to_sshd_config }}"
+                  # regex locates occurrences of PubkeyAuthentication that are not comments or are set to no
+        regexp:   '.*?#*.*?PubkeyAuthentication\s+[nN][oO].*|.*?#.*?PubkeyAuthentication\s+[yY][eE][sS].*'
+        replace:  'PubkeyAuthentication yes'
+        validate: '/usr/sbin/sshd -qtf %s'
+        backup:   yes
+
