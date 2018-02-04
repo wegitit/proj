@@ -13,7 +13,13 @@
 #  Look into using trailing slash to distinguish directories and remove fsObj_TYPE_x
 
 # NOTE
+#  For roles, see also
+#   ansible-galaxy init -p playbooks/roles web
+#    -p      = path to roles directory
+#    default = current directory
+#
 #  passing strings to a f() trim changed the string
+
 
 # REF
 #  Strip leading and trailing whitespace
